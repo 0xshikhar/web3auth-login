@@ -14,6 +14,8 @@ import {
     OpenloginLoginParams,
 } from "@web3auth/openlogin-adapter";
 import CustomRainbowWallet from "./CustomRainbowWallet";
+import { checkAddress } from "../utils/supabase";
+import RPC from "../utils/RPC";
 
 
 const clientId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID;
@@ -27,6 +29,7 @@ function Card() {
     const [web3auth, setWeb3auth] = useState();
     const [provider, setProvider] = useState();
     const [loggedIn, setLoggedIn] = useState();
+    const [walletAddress, setWalletAddress] = useState();
 
     useEffect(() => {
         const init = async () => {
@@ -116,14 +119,97 @@ function Card() {
                 setProvider(web3auth.provider);
                 if (web3auth.connected) {
                     setLoggedIn(true);
+                    console.log("web3auth connected", web3auth.connected);
+
+                    const rpc = new RPC(web3auth.provider);
+                    const address = await rpc.getAccounts();
+                    setWalletAddress(address);
+                    console.log("address", address);
+                    if (address.length > 0) {
+                        console.log("check address", checkAddress(address[0]))
+                        checkAddress(address[0]).then((res) => {
+                            console.log("res", res);
+                            if (res) {
+                                router.push("/dashboard");
+                            }
+                            else {
+                                if (open === "client") {
+                                    router.push("/client");
+                                }
+                                else {
+                                    router.push("/auditor");
+                                }
+                            }
+                        }
+                        )
+
+
+                    }
+                    router.push("/dashboard");
                 }
-            } catch (error) {
+            }
+
+            catch (error) {
                 console.error(error);
             }
         };
 
         init();
+        if (loggedIn) {
+            userRoutes();
+        }
     }, []);
+
+    // useEffect(() => {
+    //     async function checkUser() {
+    //         if (provider) {
+    //             const rpc = new RPC(provider);
+    //             const address = await rpc.getAccounts();
+    //             setWalletAddress(address);
+    //             if (address.length > 0) {
+    //                 if (checkAddress(address[0])) {
+    //                     router.push("/dashboard");
+    //                 }
+    //                 else {
+    //                     if (open === "client") {
+    //                         router.push("/client");
+    //                     }
+    //                     else {
+    //                         router.push("/auditor");
+    //                     }
+    //                 }
+    //             }
+    //             router.push("/dashboard");
+    //         }
+    //     }
+    //     checkUser();
+    // }, [provider]);
+
+    // const userRoutes = async () => {
+    //     if (provider) {
+    //         const rpc = new RPC(provider);
+    //         const address = await rpc.getAccounts();
+    //         setWalletAddress(address);
+    //         if (address.length > 0) {
+    //             if (checkAddress(address[0])) {
+    //                 router.push("/dashboard");
+    //             }
+    //             else {
+    //                 if (open === "client") {
+    //                     router.push("/client");
+    //                 }
+    //                 else {
+    //                     router.push("/auditor");
+    //                 }
+    //             }
+
+    //         }
+    //         router.push("/dashboard");
+    //     }
+    //     else {
+    //         console.log("provider not initialized yet");
+    //     }
+    // }
 
     const login = async () => {
         if (!web3auth) {
@@ -134,6 +220,21 @@ function Card() {
             WALLET_ADAPTERS.OPENLOGIN,
             {
                 loginProvider: "google",
+
+            }
+        );
+        setProvider(web3authProvider);
+    };
+
+    const loginGithub = async () => {
+        if (!web3auth) {
+            uiConsole("web3auth not initialized yet");
+            return;
+        }
+        const web3authProvider = await web3auth.connectTo(
+            WALLET_ADAPTERS.OPENLOGIN,
+            {
+                loginProvider: "github",
             }
         );
         setProvider(web3authProvider);
@@ -229,6 +330,7 @@ function Card() {
         }
         const rpc = new RPC(provider);
         const address = await rpc.getAccounts();
+        setWalletAddress(address);
         uiConsole(address);
     };
 
@@ -294,6 +396,13 @@ function Card() {
         else {
             console.log("invalid email");
             setEmailError(true);
+        }
+    }
+
+    function uiConsole(...args) {
+        const el = document.querySelector("#console>p");
+        if (el) {
+            el.innerHTML = JSON.stringify(args || {}, null, 2);
         }
     }
 
@@ -381,7 +490,7 @@ function Card() {
                                             </button>
                                         </div>
                                         <div className="flex text-center justify-center items-center align-middle mt-3 ">
-                                            <button className="px-10 items-center justify-center py-3 border flex gap-6 border-slate-200 text-center dark:border-slate-700 bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+                                            <button onClick={loginGithub} className="px-10 items-center justify-center py-3 border flex gap-6 border-slate-200 text-center dark:border-slate-700 bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
                                                 <Image src="https://www.svgrepo.com/show/512317/github-142.svg" alt="google logo" width={25} height={25} />
                                                 <div className="text-black">Login using your Github Account</div>
                                             </button>

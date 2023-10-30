@@ -12,7 +12,14 @@
   },
   "dependencies": {
     "@rainbow-me/rainbowkit": "^0.12.4",
+    "@supabase/supabase-js": "^2.38.4",
+    "@walletconnect/modal": "^2.6.1",
+    "@web3auth/base": "^7.0.4",
+    "@web3auth/ethereum-provider": "^7.0.4",
     "@web3auth/modal": "^7.0.5",
+    "@web3auth/no-modal": "^7.0.4",
+    "@web3auth/openlogin-adapter": "^7.0.4",
+    "@web3auth/wallet-connect-v2-adapter": "^7.0.4",
     "alchemy-sdk": "^2.6.2",
     "daisyui": "^2.51.6",
     "dotenv": "^16.3.1",
@@ -24,12 +31,7 @@
     "react-toastify": "^8.0.3",
     "typescript": "5.1.6",
     "wagmi": "^0.12.6",
-    "@walletconnect/modal": "^2.6.1",
-    "@web3auth/base": "^7.0.4",
-    "@web3auth/ethereum-provider": "^7.0.4",
-    "@web3auth/no-modal": "^7.0.4",
-    "@web3auth/openlogin-adapter": "^7.0.4",
-    "@web3auth/wallet-connect-v2-adapter": "^7.0.4"
+    "web3": "^4.2.1"
   },
   "devDependencies": {
     "@types/node": "20.4.9",
