@@ -41,7 +41,7 @@ export default function AuditorForm() {
 
     return (
         <section className="my-25 lg:my-[50px] md:bg-white">
-            <div className="container md:w-[660px] md:h-[750px] bg-[#F1F1F1] rounded-[34px] shadow">
+            <div className="container md:w-[660px] md:h-[710px] bg-[#F1F1F1] rounded-[34px] shadow">
                 <div className="px-5 pt-5  text-black text-left">
                     <div className="text-xl px-2 md:px-0 font-semibold "> Contact Details
                     </div>
