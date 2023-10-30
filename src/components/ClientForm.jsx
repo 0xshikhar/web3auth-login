@@ -65,7 +65,7 @@ export default function ClientForm() {
                                     placeholder="John Carter"
                                     onChange={handleChange}
                                     required
-                                    className="peer px-10 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                    className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                 />
                             </div>
                         </div>
@@ -86,7 +86,7 @@ export default function ClientForm() {
                                     onChange={handleChange}
                                     required
                                     icon={Company}
-                                    className="peer px-10 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                    className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                 />
                             </div>
                         </div>
@@ -106,7 +106,7 @@ export default function ClientForm() {
                                     placeholder="Your Website"
                                     onChange={handleChange}
                                     required
-                                    className="peer px-10 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                    className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                 />
                             </div>
                         </div>
@@ -127,7 +127,7 @@ export default function ClientForm() {
                                         placeholder="eg. bytebreach"
                                         onChange={handleChange}
                                         required
-                                        className="peer px-10 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                        className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                     />
                                 </div>
                             </div>
@@ -147,7 +147,7 @@ export default function ClientForm() {
                                         placeholder="eg. bytebreach"
                                         onChange={handleChange}
                                         required
-                                        className="peer px-10 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                        className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                     />
                                 </div>
                             </div>
@@ -168,14 +168,14 @@ export default function ClientForm() {
                                     placeholder="12345"
                                     onChange={handleChange}
                                     required
-                                    className="peer px-10 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                    className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                 />
                             </div>
                         </div>
 
                         <div className="flex align-middle justify-center items-center">
                             <button type="submit"
-                                className="px-10 py-4 border flex gap-6 border-slate-200 dark:border-slate-700 bg-blue-950 rounded-[56px] text-white dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-200 dark:hover:text-slate-300 hover:shadow transition duration-150"
+                                className="px-6 py-4 border flex gap-6 border-slate-200 dark:border-slate-700 bg-blue-950 rounded-[56px] text-white dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-200 dark:hover:text-slate-300 hover:shadow transition duration-150"
                             >Submit
                             </button>
                         </div>

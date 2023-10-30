@@ -65,7 +65,7 @@ export default function AuditorForm() {
                                     placeholder="John Carter"
                                     onChange={handleChange}
                                     required
-                                    className="peer px-6 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                    className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                 />
                             </div>
                         </div>
@@ -85,7 +85,7 @@ export default function AuditorForm() {
                                     placeholder="eg. bytebreach"
                                     onChange={handleChange}
                                     required
-                                    className="peer px-6 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                    className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                 />
                             </div>
                         </div>
@@ -103,7 +103,7 @@ export default function AuditorForm() {
                                     placeholder="eg. 500$"
                                     onChange={handleChange}
                                     required
-                                    className="peer px-6 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                    className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                 />
                             </div>
                         </div>
@@ -123,7 +123,7 @@ export default function AuditorForm() {
                                     placeholder="eg. bytebreach"
                                     onChange={handleChange}
                                     required
-                                    className="peer px-6 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                    className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                 />
                             </div>
                         </div>
@@ -144,7 +144,7 @@ export default function AuditorForm() {
                                         placeholder="eg. bytebreach"
                                         onChange={handleChange}
                                         required
-                                        className="peer px-6 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                        className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                     />
                                 </div>
                             </div>
@@ -161,7 +161,7 @@ export default function AuditorForm() {
                                         placeholder="eg. bytebreach"
                                         onChange={handleChange}
                                         required
-                                        className="peer px-6 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                        className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                     />
                                 </div>
                             </div>
@@ -182,7 +182,7 @@ export default function AuditorForm() {
                                     placeholder="12345"
                                     onChange={handleChange}
                                     required
-                                    className="peer px-6 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                    className="peer px-6 py-2 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
                                 />
                             </div>
                         </div>
