@@ -340,7 +340,7 @@ function Card() {
     return (
         <>
             <section className="my-25 lg:my-[120px] md:bg-white">
-                <div className="container w-[290px] md:w-[660px] bg-[#F1F1F1] rounded-[34px]">
+                <div className="container md:w-[660px] bg-[#F1F1F1] rounded-[34px]">
                     <div className="flex flex-wrap">
                         <div className="w-full">
                             <div className="">

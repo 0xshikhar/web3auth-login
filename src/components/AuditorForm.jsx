@@ -41,8 +41,8 @@ export default function AuditorForm() {
 
     return (
         <section className="my-25 lg:my-[50px] md:bg-white">
-            <div className="container w-[290px] md:w-[660px] md:h-[750px] bg-[#F1F1F1] rounded-[34px] shadow">
-                <div className="px-5 pt-5 text-black text-left">
+            <div className="container md:w-[660px] md:h-[750px] bg-[#F1F1F1] rounded-[34px] shadow">
+                <div className="px-5 pt-5  text-black text-left">
                     <div className="text-xl px-2 md:px-0 font-semibold "> Contact Details
                     </div>
                     <div className="text-sm pt-1 px-2 md:px-0 text-gray-500"> Enter your details to login
@@ -189,7 +189,7 @@ export default function AuditorForm() {
 
                         <div className="flex align-middle justify-center items-center">
                             <button type="submit"
-                                className="px-6 py-4 border flex gap-6 border-slate-200 dark:border-slate-700 bg-blue-950 rounded-[56px] text-white dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-200 dark:hover:text-slate-300 hover:shadow transition duration-150"
+                                className="px-6 py-4 mb-2 border flex gap-6 border-slate-200 dark:border-slate-700 bg-blue-950 rounded-[56px] text-white dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-200 dark:hover:text-slate-300 hover:shadow transition duration-150"
                             >Submit
                             </button>
                         </div>

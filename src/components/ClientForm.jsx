@@ -41,7 +41,7 @@ export default function ClientForm() {
 
     return (
         <section className="my-25 lg:my-[120px] md:bg-white">
-            <div className="container w-[290px] md:w-[660px] md:h-[700px] bg-[#F1F1F1] rounded-[34px] shadow">
+            <div className="container md:w-[660px] md:h-[670px] bg-[#F1F1F1] rounded-[34px] shadow">
                 <div className="px-5 pt-5 text-black text-left">
                     <div className="text-xl px-2 md:px-0 font-semibold "> Contact Details
                     </div>
@@ -175,7 +175,7 @@ export default function ClientForm() {
 
                         <div className="flex align-middle justify-center items-center">
                             <button type="submit"
-                                className="px-6 py-4 border flex gap-6 border-slate-200 dark:border-slate-700 bg-blue-950 rounded-[56px] text-white dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-200 dark:hover:text-slate-300 hover:shadow transition duration-150"
+                                className="px-6 py-4 mb-2 border flex gap-6 border-slate-200 dark:border-slate-700 bg-blue-950 rounded-[56px] text-white dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-200 dark:hover:text-slate-300 hover:shadow transition duration-150"
                             >Submit
                             </button>
                         </div>
