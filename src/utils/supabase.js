@@ -8,14 +8,14 @@ export const checkAddress = async (addressToCheck) => {
         const { data, error } = await supabase
             .from('user_data')
             .select('walletId') // Select the 'id' field
-            .eq('walletId', "kjhsdfA"); // Check if 'id' equals the value
+            .eq('walletId', addressToCheck); // Check if 'id' equals the value
 
         if (error) {
             throw error;
         }
 
         // If data is empty, the value does not exist in the 'id' field
-        if(data.length > 0) {
+        if (data.length > 0) {
             console.log('supabase data found', data)
             return true;
         }
@@ -28,3 +28,64 @@ export const checkAddress = async (addressToCheck) => {
         return false;
     }
 };
+
+export const addClientData = async (address, userType, formData) => {
+    try {
+        const { data, error } = await supabase
+            .from('user_data')
+            .insert([
+                {
+                    walletId: address,
+                    userType: userType,
+                    name: formData.name,
+                    companyName: formData.company,
+                    github: formData.github,
+                    twitter: formData.twitter,
+                    inviteCode: formData.invite,
+                    website: formData.website,
+                    status: "true",
+                },
+            ])
+            .select()
+
+        if (error) {
+            throw error;
+        }
+
+        console.log("Supabase data added", data)
+    }
+    catch (error) {
+        console.error('Supabase error:', error);
+    }
+}
+
+export const auditorClientData = async (address, userType, formData) => {
+    try {
+        const { data, error } = await supabase
+            .from('user_data')
+            .insert([
+                {
+                    walletId: address,
+                    userType: userType,
+                    name: formData.name,
+                    github: formData.github,
+                    twitter: formData.twitter,
+                    inviteCode: formData.invite,
+                    weeklyCost: formData.cost,
+                    sherlock: formData.sherlock,
+                    codeArena: formData.codeArena,
+                    status: "true",
+                },
+            ])
+            .select()
+
+        if (error) {
+            throw error;
+        }
+
+        console.log("Supabase data added", data)
+    }
+    catch (error) {
+        console.error('Supabase error:', error);
+    }
+}

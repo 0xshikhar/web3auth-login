@@ -1,7 +1,13 @@
 import Image from 'next/image';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { atom, useAtom } from 'jotai'
+import { walletAddressAtom } from "../utils/state";
+import { useRouter } from 'next/navigation';
 
 const CustomRainbowWallet = () => {
+    const [walletAddress, setWalletAddress] = useAtom(walletAddressAtom)
+    const router = useRouter()
+
     return (
         <ConnectButton.Custom>
             {({
@@ -13,8 +19,6 @@ const CustomRainbowWallet = () => {
                 authenticationStatus,
                 mounted,
             }) => {
-                // Note: If your app doesn't use authentication, you
-                // can remove all 'authenticationStatus' checks
                 const ready = mounted && authenticationStatus !== 'loading';
                 const connected =
                     ready &&
@@ -52,13 +56,17 @@ const CustomRainbowWallet = () => {
                                     </button>
                                 );
                             }
+                            if (connected && account) {
+                                setWalletAddress(account.address)
+                                router.push('/auditor')
+                            }
                             return (
                                 <div className='text-black' style={{ display: 'flex', gap: 12 }}>
                                     <button
                                         onClick={openChainModal}
                                         style={{ display: 'flex', alignItems: 'center' }}
                                         type="button"
-                                        
+
                                     >
                                         {chain.hasIcon && (
                                             <div

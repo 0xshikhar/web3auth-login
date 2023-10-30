@@ -1,7 +1,7 @@
 import Router, { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { HiOutlineMail } from "react-icons/hi";
+import { MdOutlineEmail } from "react-icons/md";
 import { Web3AuthNoModal } from "@web3auth/no-modal";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import {
@@ -16,7 +16,8 @@ import {
 import CustomRainbowWallet from "./CustomRainbowWallet";
 import { checkAddress } from "../utils/supabase";
 import RPC from "../utils/RPC";
-
+import { atom, useAtom } from 'jotai'
+import { walletAddressAtom } from "../utils/state";
 
 const clientId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID;
 
@@ -29,7 +30,7 @@ function Card() {
     const [web3auth, setWeb3auth] = useState();
     const [provider, setProvider] = useState();
     const [loggedIn, setLoggedIn] = useState();
-    const [walletAddress, setWalletAddress] = useState();
+    const [walletAddress, setWalletAddress] = useAtom(walletAddressAtom);
 
     useEffect(() => {
         const init = async () => {
@@ -128,7 +129,7 @@ function Card() {
                     if (address.length > 0) {
                         console.log("check address", checkAddress(address[0]))
                         checkAddress(address[0]).then((res) => {
-                            console.log("res", res);
+                            console.log("res:", res);
                             if (res) {
                                 router.push("/dashboard");
                             }
@@ -142,74 +143,49 @@ function Card() {
                             }
                         }
                         )
-
-
                     }
                     router.push("/dashboard");
                 }
             }
-
             catch (error) {
                 console.error(error);
             }
         };
 
         init();
-        if (loggedIn) {
-            userRoutes();
-        }
     }, []);
 
-    // useEffect(() => {
-    //     async function checkUser() {
-    //         if (provider) {
-    //             const rpc = new RPC(provider);
-    //             const address = await rpc.getAccounts();
-    //             setWalletAddress(address);
-    //             if (address.length > 0) {
-    //                 if (checkAddress(address[0])) {
-    //                     router.push("/dashboard");
-    //                 }
-    //                 else {
-    //                     if (open === "client") {
-    //                         router.push("/client");
-    //                     }
-    //                     else {
-    //                         router.push("/auditor");
-    //                     }
-    //                 }
-    //             }
-    //             router.push("/dashboard");
-    //         }
-    //     }
-    //     checkUser();
-    // }, [provider]);
+    const userRoutes = async (provider) => {
+        if (provider) {
+            setLoggedIn(true);
+            console.log("web3auth provider", provider);
 
-    // const userRoutes = async () => {
-    //     if (provider) {
-    //         const rpc = new RPC(provider);
-    //         const address = await rpc.getAccounts();
-    //         setWalletAddress(address);
-    //         if (address.length > 0) {
-    //             if (checkAddress(address[0])) {
-    //                 router.push("/dashboard");
-    //             }
-    //             else {
-    //                 if (open === "client") {
-    //                     router.push("/client");
-    //                 }
-    //                 else {
-    //                     router.push("/auditor");
-    //                 }
-    //             }
+            const rpc = new RPC(provider);
+            const address = await rpc.getAccounts();
+            setWalletAddress(address);
+            console.log("address", address);
+            if (address.length > 0) {
+                console.log("check address", checkAddress(address[0]))
+                checkAddress(address[0]).then((res) => {
+                    console.log("res:", res);
+                    if (res) {
+                        router.push("/dashboard");
+                    }
+                    else {
+                        if (open === "client") {
+                            router.push("/client");
+                        }
+                        else {
+                            router.push("/auditor");
+                        }
+                    }
+                }
+                )
+            }
+            router.push("/dashboard");
+        }
+    }
 
-    //         }
-    //         router.push("/dashboard");
-    //     }
-    //     else {
-    //         console.log("provider not initialized yet");
-    //     }
-    // }
 
     const login = async () => {
         if (!web3auth) {
@@ -224,6 +200,7 @@ function Card() {
             }
         );
         setProvider(web3authProvider);
+        userRoutes(web3authProvider);
     };
 
     const loginGithub = async () => {
@@ -238,6 +215,7 @@ function Card() {
             }
         );
         setProvider(web3authProvider);
+        userRoutes(web3authProvider);
     };
 
     const loginWithEmail = async (email) => {
@@ -255,6 +233,7 @@ function Card() {
             }
         );
         setProvider(web3authProvider);
+        userRoutes(web3authProvider);
     };
 
     const authenticateUser = async () => {
@@ -295,34 +274,6 @@ function Card() {
         uiConsole(chainId);
     };
 
-    const addChain = async () => {
-        if (!provider) {
-            uiConsole("provider not initialized yet");
-            return;
-        }
-        const newChain = {
-            chainId: "0x5",
-            displayName: "Goerli",
-            chainNamespace: CHAIN_NAMESPACES.EIP155,
-            tickerName: "Goerli",
-            ticker: "ETH",
-            decimals: 18,
-            rpcTarget: "https://rpc.ankr.com/eth_goerli",
-            blockExplorer: "https://goerli.etherscan.io",
-        };
-        await web3auth?.addChain(newChain);
-        uiConsole("New Chain Added");
-    };
-
-    const switchChain = async () => {
-        if (!provider) {
-            uiConsole("provider not initialized yet");
-            return;
-        }
-        await web3auth?.switchChain({ chainId: "0x5" });
-        uiConsole("Chain Switched");
-    };
-
     const getAccounts = async () => {
         if (!provider) {
             uiConsole("provider not initialized yet");
@@ -344,16 +295,6 @@ function Card() {
         uiConsole(balance);
     };
 
-    const sendTransaction = async () => {
-        if (!provider) {
-            uiConsole("provider not initialized yet");
-            return;
-        }
-        const rpc = new RPC(provider);
-        const receipt = await rpc.sendTransaction();
-        uiConsole(receipt);
-    };
-
     const signMessage = async () => {
         if (!provider) {
             uiConsole("provider not initialized yet");
@@ -362,16 +303,6 @@ function Card() {
         const rpc = new RPC(provider);
         const signedMessage = await rpc.signMessage();
         uiConsole(signedMessage);
-    };
-
-    const getPrivateKey = async () => {
-        if (!provider) {
-            uiConsole("provider not initialized yet");
-            return;
-        }
-        const rpc = new RPC(provider);
-        const privateKey = await rpc.getPrivateKey();
-        uiConsole(privateKey);
     };
 
 
@@ -448,35 +379,42 @@ function Card() {
                                         </button>
                                     </div>
                                     <div className=" h-[0px] border my-6 border-neutral-300"></div>
-                                    <div className="text-black">
-                                        <div className="text-left px-2 md:px-0"> Email
-                                        </div>
-                                        <div className="mt-3 text-left">
-                                            <form onSubmit={handleSubmit}>
-                                                <input
-                                                    type="email"
-                                                    id="email"
-                                                    placeholder="Email address"
-                                                    value={email}
-                                                    onChange={(e) => handleOnChange(e)}
-                                                    required
-                                                    className="peer px-10 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 "
-                                                />
-                                                {emailError ? (<p className=" invisible peer-invalid:visible text-red-800 text-sm">
-                                                    Please provide a valid email address.
-                                                </p>)
-                                                    :
-                                                    (" ")
-                                                }
-                                                <div className="flex align-middle justify-center items-center">
-                                                    <button type="submit"
-                                                        className="px-10 my-4 py-3 border flex gap-6 border-slate-200 dark:border-slate-700 bg-blue-950 rounded-[56px] text-white dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
-                                                    >Submit
-                                                    </button>
+                                    <div className="mt-3 text-left">
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="relative text-left">
+                                                <div className="text-black text-left px-2 md:px-0"> Email
                                                 </div>
+                                                <div className="mt-3 ">
+                                                    <span className="absolute inset-y-0 top-8 right-0 flex items-center pr-4">
+                                                        <MdOutlineEmail size={25} className="text-gray-500" />
+                                                    </span>
+                                                    <input
+                                                        type="email"
+                                                        id="email"
+                                                        placeholder="Email address"
+                                                        value={email}
+                                                        onChange={(e) => handleOnChange(e)}
+                                                        required
+                                                        icon={<MdOutlineEmail className="bg-black" />}
+                                                        className="peer px-10 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                                    />
+                                                </div>
+                                            </div>
 
-                                            </form>
-                                        </div>
+                                            {emailError ? (<p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
+                                                Please provide a valid email address.
+                                            </p>)
+                                                :
+                                                (" ")
+                                            }
+                                            <div className="flex align-middle justify-center items-center">
+                                                <button type="submit"
+                                                    className="px-10 my-4 py-3 border flex gap-6 border-slate-200 dark:border-slate-700 bg-blue-950 rounded-[56px] text-white dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-300 dark:hover:text-slate-300 hover:shadow transition duration-150"
+                                                >Submit
+                                                </button>
+                                            </div>
+
+                                        </form>
                                     </div>
                                 </div>
                             ) :
@@ -499,35 +437,45 @@ function Card() {
                                             <CustomRainbowWallet />
                                         </div>
                                         <div className=" h-[0px] border my-6 border-neutral-300"></div>
-                                        <div className="text-black">
-                                            <div className="text-left px-2 md:px-0"> Email
-                                            </div>
-                                            <div className="mt-3 text-left">
-                                                <form onSubmit={handleSubmit}>
-                                                    <input
-                                                        type="email"
-                                                        id="email"
-                                                        placeholder="Email address"
-                                                        value={email}
-                                                        onChange={(e) => handleOnChange(e)}
-                                                        required
-                                                        className="peer px-10 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
-                                                    />
-                                                    {emailError ? (<p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
-                                                        Please provide a valid email address.
-                                                    </p>)
-                                                        :
-                                                        (" ")
-                                                    }
-                                                    <div className="flex align-middle justify-center items-center">
-                                                        <button type="submit"
-                                                            className="px-10 my-4 py-3 border flex gap-6 border-slate-200 dark:border-slate-700 bg-blue-950 rounded-[56px] text-white dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
-                                                        >Submit
-                                                        </button>
-                                                    </div>
 
-                                                </form>
-                                            </div>
+                                        <div className="mt-3 text-left">
+                                            <form onSubmit={handleSubmit}>
+                                                <div className="relative text-left">
+                                                    <div className="text-black text-left px-2 md:px-0"> Email
+                                                    </div>
+                                                    <div className="mt-3 ">
+                                                        <span className="absolute inset-y-0 top-8 right-0 flex items-center pr-4">
+                                                            <MdOutlineEmail size={25} className="text-gray-500" />
+                                                        </span>
+                                                        <input
+                                                            type="email"
+                                                            id="email"
+                                                            placeholder="Email address"
+                                                            value={email}
+                                                            onChange={(e) => handleOnChange(e)}
+                                                            required
+                                                            icon={<MdOutlineEmail className="bg-black" />}
+                                                            className="peer px-10 py-3 border flex gap-6 border-slate-200  bg-white w-full rounded-[20px] text-slate-700 dark:text-slate-600 hover:border-slate-200 hover:shadow transition duration-150"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* <div className="relative top-0 right-0 pr-3 flex items-center align pointer-events-none">
+                                                    </div> */}
+                                                {emailError ? (<p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
+                                                    Please provide a valid email address.
+                                                </p>)
+                                                    :
+                                                    (" ")
+                                                }
+                                                <div className="flex align-middle justify-center items-center">
+                                                    <button type="submit"
+                                                        className="px-10 my-4 py-3 border flex gap-6 border-slate-200 dark:border-slate-700 bg-blue-950 rounded-[56px] text-white dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
+                                                    >Submit
+                                                    </button>
+                                                </div>
+
+                                            </form>
                                         </div>
                                     </div>
                                 )
